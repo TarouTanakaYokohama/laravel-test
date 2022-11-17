@@ -1,0 +1,74 @@
+# docker-composeのバージョン
+version: "3" 
+
+# コンテナ定義
+services:
+  # webサーバー
+  web:
+    # コンテナ名
+    container_name: "web"
+    # コンテナの作成に使用するDockerfileのパス
+    build:
+      dockerfile: "./container/web/Dockerfile"
+    # ホスト側のポート:コンテナ側のポートを指定
+    ports:
+      - "8080:80"
+    # src配下のファイルをコンテナ内の~/va/www/html配下に配置
+    volumes:
+      - "./src:/var/www/html"
+
+  # PHPサーバー
+  php:
+    # コンテナ名
+    container_name: "php"
+    # コンテナの作成に使用するDockerfileのパス
+    build:
+      dockerfile: "./container/php/Dockerfile"
+    # srcディレクトリ内のファイルをコンテナ内の~/var/www/html配下にマウント
+    volumes:
+      - "./src:/var/www/html"
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.7
+    container_name: elasticsearch
+    ports:
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.monitoring.collection.enabled=true
+      - ELASTIC_PASSWORD=P@ssw0rd
+      - "ES_JAVA_OPTS=-Xms512M -Xmx512M"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearch-data:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.7
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=P@ssw0rd
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    restart: always
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.17.7
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+    ports:
+      - "5044:5044"
+      - "50000:50000/tcp"
+      - "50000:50000/udp"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: -Xms256m -Xmx256m
+      LOGSTASH_INTERNAL_PASSWORD: P@ssw0rd
+    depends_on:
+      - elasticsearch
