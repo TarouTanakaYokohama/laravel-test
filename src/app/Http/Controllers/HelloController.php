@@ -59,6 +59,7 @@ class HelloController extends Controller
 
         // Log::channel('logstash')->debug('Logging to logstash');
         // Log::channel('logstash')->info('aaa');
+
         \Log::channel('logstash')->info("HELLO");
 
         // Log::channel("logstash")->info([

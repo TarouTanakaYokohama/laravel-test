@@ -39,6 +39,7 @@ return [
     |
     */
 
+
     'channels' => [
         // 'logstash' => [
         //     'driver' => 'custom',

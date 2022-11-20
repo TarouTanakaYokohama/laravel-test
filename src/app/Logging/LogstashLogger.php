@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 class LogstashLogger
 {
-
     public function __invoke(array $config)
     {
         $logger = new Logger($config['channel']);

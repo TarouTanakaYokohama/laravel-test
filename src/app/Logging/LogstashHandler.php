@@ -10,7 +10,6 @@ use Monolog\Handler\AbstractProcessingHandler;
 
 class LogstashHandler extends AbstractProcessingHandler
 {
-
     private $config;
 
     public function __construct($with, $level = Logger::DEBUG, $bubble = true)
