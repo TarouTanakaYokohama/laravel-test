@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,4 +14,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/hello', 'App\Http\Controllers\HelloController@index');
+
+Route::get('/index', 'HelloController@index');
+
+
+// Route::get('/index', function () {
+//     // Log::channel('logstash')->emergency('aaafeaf');
+//     // \Log::channel("logstash")->info("THIS IS SAMPLE RECORD FROM LOG");
+//     print("ログを出力しました");
+// });

@@ -1,5 +1,5 @@
 # ベースイメージの指定
-FROM php:fpm-buster
+FROM php:7.4-fpm-buster
 
 # 作成した設定ファイルをコンテナ内にコピー
 COPY ./container/php/php.ini /usr/local/etc/php/php.ini
