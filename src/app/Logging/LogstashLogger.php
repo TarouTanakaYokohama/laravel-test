@@ -16,7 +16,8 @@ class LogstashLogger
             'address' => config('logging.address'),
             'port' => config('logging.port')
         ];
-        // Log::emergency();
+        // Log::emergency($server_info);
+
         return $logger->pushHandler(new LogstashHandler($server_info, Logger::DEBUG, true));
     }
 }

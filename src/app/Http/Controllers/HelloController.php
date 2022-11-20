@@ -16,7 +16,7 @@ class HelloController extends Controller
     public function index()
     {
         // $hosts = [
-        //     'http://elastic:P@ssw0rd@elasticsearch:9200'
+        //     'http://elasticsearch:9200'
         // ];
 
         // $client = ClientBuilder::create()
@@ -32,7 +32,7 @@ class HelloController extends Controller
 
 
         // $params = [
-        //     'index' => 'test',
+        //     'index' => 'test1',
         //     'body'  => [
         //         'userAgent' => 'aaa',
         //         'timestamp' => 'dd',
@@ -61,7 +61,7 @@ class HelloController extends Controller
         // Log::channel('logstash')->info('aaa');
 
         \Log::channel('logstash')->info("HELLO");
-
+        // 
         // Log::channel("logstash")->info([
         //     'user' => '1',
         //     'test' => '1112'

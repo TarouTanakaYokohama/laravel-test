@@ -15,7 +15,7 @@ class LogstashHandler extends AbstractProcessingHandler
     public function __construct($with, $level = Logger::DEBUG, $bubble = true)
     {
         $this->config = $with;
-        parent::__construct($level, $bubble);
+        $test = parent::__construct($level, $bubble);
     }
 
 

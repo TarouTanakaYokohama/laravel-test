@@ -36,11 +36,11 @@ services:
     environment:
       - discovery.type=single-node
       # - cluster.name=docker-cluster
-      - cluster.name=cluster
-      - bootstrap.memory_lock=true
-      - xpack.security.enabled=true
-      - xpack.monitoring.collection.enabled=true
-      - ELASTIC_PASSWORD=P@ssw0rd
+      # - cluster.name=cluster
+      # - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      # - xpack.monitoring.collection.enabled=true
+      # - ELASTIC_PASSWORD=P@ssw0rd
       - "ES_JAVA_OPTS=-Xms512M -Xmx512M"
     ulimits:
       memlock:
@@ -53,8 +53,8 @@ services:
     image: docker.elastic.co/kibana/kibana:7.17.7
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=P@ssw0rd
+      # - ELASTICSEARCH_USERNAME=elastic
+      # - ELASTICSEARCH_PASSWORD=P@ssw0rd
     ports:
       - 5601:5601
     depends_on:
@@ -68,11 +68,12 @@ services:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
     ports:
       - "5044:5044"
+      - "5428:5428"
       - "50000:50000/tcp"
       - "50000:50000/udp"
       - "9600:9600"
     environment:
       LS_JAVA_OPTS: -Xms108m -Xmx108m
-      LOGSTASH_INTERNAL_PASSWORD: P@ssw0rd
+      # LOGSTASH_INTERNAL_PASSWORD: P@ssw0rd
     depends_on:
       - elasticsearch

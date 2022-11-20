@@ -21,7 +21,8 @@ return [
 
     'default' => env('LOG_CHANNEL', 'stack'),
 
-    'address' => env('LOG_ADDRESS', 'http://elastic:P@ssw0rd@elasticsearch'),
+    // これをLogstashLogger.phpが呼んでいる
+    'address' => env('LOG_ADDRESS', 'http://elasticsearch'),
     'port' => env('LOG_PORT', '9200'),
 
     /*
@@ -39,7 +40,6 @@ return [
     |
     */
 
-
     'channels' => [
         // 'logstash' => [
         //     'driver' => 'custom',
@@ -50,13 +50,14 @@ return [
         'logstash' => [
             'driver' => 'custom',
             'via' => App\Logging\LogstashLogger::class,
-            'channel' => 'logstash',
+            'channel' => 'test',
             'with' => [
-                // 'address' => "elastic:P@ssw0rd",
+                // 'address' => "192.168.31.249",
+                // 'port' => "5428"
                 'address' => "elasticsearch",
-                'user' => "elastic",
-                'password' => "P@ssw0rd",
-                'port' => "9200"
+                // 'port' => "5044"
+                // 'address' => "http://localhost",
+                'port' => "5428"
             ]
         ],
 
